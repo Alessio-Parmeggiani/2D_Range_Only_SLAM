@@ -1,6 +1,6 @@
 function pose=poseFromId(id,poses)
     %cost O(1)
-    %this work because each pose has id = 1 + previous index 
+    %this work because each pose has id = 1 + previous id 
     first_id=poses(1).id;
     pose=poses(id-first_id+1);
 

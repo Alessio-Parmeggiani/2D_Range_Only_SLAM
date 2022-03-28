@@ -1,7 +1,7 @@
 close all
 clear 
 clc
-clf
+
 
 addpath 'tools/g2o_wrapper'
 addpath 'tools/visualization'
@@ -23,6 +23,7 @@ printf("\n\nLoading Data...\n")
 [gt_landmarks, gt_poses, gt_transitions, gt_observations] = loadG2o(fullfile(data_path, dataset_gt));
 [~,poses,transitions,observations] = loadG2o(fullfile(data_path, dataset_ig));
 
+%cardinality of the data
 num_landmarks=length(gt_landmarks);
 num_poses=length(poses);
 num_transitions=length(transitions);
@@ -73,4 +74,6 @@ endfor
 
 %plot trajectory and landmarks
 myPlot(robot_poses,XR,gt_matrix_poses,init_guess,XL,gt_landmarks)
+
+printf("Done!\n")
 

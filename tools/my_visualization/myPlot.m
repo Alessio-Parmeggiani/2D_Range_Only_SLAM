@@ -5,8 +5,9 @@ function myPlot(init_poses,optim_poses,gt_poses,init_land,optim_land,gt_land)
 	
 endfunction
 
-% Plots the trajectories IG/OPT/GT
+%plotting trajectories
 function myDrawTrajectory(init,optim,gt,poses_num)
+	%I have all trajectories in matrix form
 	poses_num=length(gt);
     figure();
     hold on;
@@ -20,6 +21,9 @@ function myDrawTrajectory(init,optim,gt,poses_num)
 	hold off;
 end
 
+%plotting landmarks 
+%cosnidering outliers, there is a landmark that should be outside of the plot
+%otherwise it looks stretched
 function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 	%first put all landmarks in a format to plot in one line
 	% in this way I can plot also a legend

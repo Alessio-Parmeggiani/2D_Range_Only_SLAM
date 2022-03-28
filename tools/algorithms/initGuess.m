@@ -1,12 +1,11 @@
 source 'tools/utilities/geometry_helpers_2d.m'
 
 function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGuess(observations,poses,transitions,params)
-    %array of landmark_observations
-    %each landmark_observations is an array fo measures (pose,range)
+    %array of landmark_observations, each one correspond to a landmark
+    %each landmark_observations is an array of measures (pose id,range)
+    land_observations=[];
 
     first_pose_id=params.first_pose_id;
-
-    land_observations=[];
     
     %used to transform landmark id into indeces 1...n
     %use big number because I don't know the biggest index I could have
@@ -54,7 +53,8 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
 
     endfor
 
-    %get poses in matrix form
+
+    %get initial poses in matrix form
     
     % no real difference in using simply the poses or computing the trajectory using the transitions
     %{

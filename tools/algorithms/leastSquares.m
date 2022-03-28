@@ -40,7 +40,7 @@ function [XR,XL]=leastSquares(land_observations,robot_poses,landmark_positions,p
         b=zeros(system_size,1);
         chi_stats(iteration) = 0;
 
-        %this two loops iterate through all the measurements
+        %these two loops iterate through all the measurements
         for l_obs=1:length(land_observations)
             land_obs=land_observations(l_obs);
             if l_obs<=length(XL)

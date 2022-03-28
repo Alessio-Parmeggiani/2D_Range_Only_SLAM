@@ -5,7 +5,7 @@ global landmark_dim=2;
 %matrix of measurements
 %row:poses;   columns:landmarks;
 %so A(pose,landmark) correspond to the measure
-%used also to test if a different order of the measurements change the Least squares results
+%used only to test if a different order of the measurements change the Least squares results
 function A=get_association_matrix(land_observations,num_poses,params)
   landmark_num=length(land_observations);
   %I could have measure of 0 so store only -1, negative range will never happen
@@ -27,7 +27,7 @@ function A=get_association_matrix(land_observations,num_poses,params)
   endfor
 endfunction
 
-%retrieve index from H matrix
+%retrieve indeces from H matrix
 function v_idx=poseMatrixIndex(pose_index, num_poses, num_landmarks)
   global pose_dim;
   global landmark_dim;
@@ -84,6 +84,8 @@ function [e, Jr, Jl] = errorAndJacobian(Xr, Xl, z)
     e = z_hat - z;
     
     %computing jacobian
+
+    %needed data
     p=R' * (Xl-t);
     c=Xr(1,1); s=Xr(2,1);
     x=Xr(1,3); y=Xr(2,3);
@@ -92,7 +94,7 @@ function [e, Jr, Jl] = errorAndJacobian(Xr, Xl, z)
     %derivative of error with respect to state
     f1=(c*x-c*xl+s*y-s*yl);  %recurrent term
     f2=(-s*x+s*xl+c*y-c*yl); %other recurrent term
-    %Jr(3) is 0, error do not depends from angle!
+    %Jr(3) is 0 but it makes sense because error do not depends from angle!
     %could have done with syms variables, but with this is faster and I forgot to use it before computing everything by hand
   
     Jr=(1/norm(p)) * [f1*c+f2*-s, f1*s+f2*c, f1*( (-x*s)+(xl*s)+(y*c)+(-yl*c)) + f2*( (-x*c)+(xl*c)+(-y*s)+(yl*s)) ];

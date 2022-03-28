@@ -22,4 +22,4 @@ function kernel_threshold=tuning(land_observations,robot_poses,landmark_position
         endif
     endfor
     printf("best damp is%f\n",params.damping)
-end
+endfunction

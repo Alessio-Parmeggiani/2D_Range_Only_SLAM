@@ -26,13 +26,13 @@ function [p1,p2]=estimateLandmarkPosition(measurements,poses)
 		y = pose.y;
 		r = measurements(k).obs_range;
         
-        A(k,:) = 2 * [(x - last_x) (y - last_y)];
+        A(k,:) = 2*[(x - last_x) (y - last_y)];
         b(k,:) = [x^2-last_x^2 + y^2-last_y^2 + last_r^2-r^2];
     endfor
 
-    landmark_position = (A'*A) \ A'*b;
+    landmark_position = (A'*A)\A'*b;
 
     p1=landmark_position(1);
     p2=landmark_position(2);
 
-end
+endfunction
