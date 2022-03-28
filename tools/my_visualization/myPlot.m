@@ -33,9 +33,9 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 			init_land(:,end+1)=init(l).pos;
 			valid_index=l;
 		else 
-			#this landamrk position has not been estimated, use random one for plot
+			#this landmark position has not been estimated, use random one for plot
 			init_land(:,end+1)=init(valid_index).pos;
-			printf("init invalid landmark\n")
+			#printf("null landmark on init guess\n")
 		endif
 	endfor
 
@@ -46,7 +46,7 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 			valid_index=l;
 		else 
 			optim_land(:,end+1)=optim(valid_index).pos;
-			printf("optim invalid landmark\n");
+			#printf("optim invalid landmark\n");
 		endif
 	endfor
 

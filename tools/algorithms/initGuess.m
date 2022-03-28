@@ -9,6 +9,7 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
     land_observations=[];
     
     #used to transform landmark id into indeces 1...n
+    #use big number because I don't know the biggest index I could have
     l_id_to_idx = ones(10000, 1)*-1;
 
     #index for the landmarks

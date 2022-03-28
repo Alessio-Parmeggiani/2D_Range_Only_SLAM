@@ -8,7 +8,9 @@ global landmark_dim=2;
 #used also to test if a different order of the measurements change the Least squares results
 function A=get_association_matrix(land_observations,num_poses,params)
   landmark_num=length(land_observations);
+  #I could have measure of 0 so store only -1, negative range will never happen
   A = ones(num_poses,landmark_num)*-1;
+  
   first_pose_id=params.first_pose_id;
   
   #for each landmark 
