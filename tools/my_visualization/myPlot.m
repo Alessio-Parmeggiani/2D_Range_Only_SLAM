@@ -21,11 +21,11 @@ function myDrawTrajectory(init,optim,gt,poses_num)
 end
 
 function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
-	#first put all landmarks in a format to plot in one line
-	# in this way I can plot also a legend
+	%first put all landmarks in a format to plot in one line
+	% in this way I can plot also a legend
 
-	# I use 3 loops to avoid any cases of errors with different sizes of the landamrks.
-	# it could happen if for example I have one landmark that has not been observed by any pose
+	% I use 3 loops to avoid any cases of errors with different sizes of the landamrks.
+	% it could happen if for example I have one landmark that has not been observed by any pose
 	init_land=zeros(2,length(init));
 	valid_index=1;
 	for l=1:length(init)
@@ -33,9 +33,9 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 			init_land(:,end+1)=init(l).pos;
 			valid_index=l;
 		else 
-			#this landmark position has not been estimated, use random one for plot
+			%this landmark position has not been estimated, use random one for plot
 			init_land(:,end+1)=init(valid_index).pos;
-			#printf("null landmark on init guess\n")
+			%printf("null landmark on init guess\n")
 		endif
 	endfor
 
@@ -46,7 +46,7 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 			valid_index=l;
 		else 
 			optim_land(:,end+1)=optim(valid_index).pos;
-			#printf("optim invalid landmark\n");
+			%printf("optim invalid landmark\n");
 		endif
 	endfor
 

@@ -1,9 +1,9 @@
 1;
 function kernel_threshold=tuning(land_observations,robot_poses,landmark_positions,poses,gt_landmarks,params)
-    #greedy parameter tuning
-    #choose parameter p and increment 
-    #if new parameter improve result use it and test p+increment
-    #otherwise reduce increment and p=p-increment
+    %greedy parameter tuning
+    %choose parameter p and increment 
+    %if new parameter improve result use it and test p+increment
+    %otherwise reduce increment and p=p-increment
     params.damping=0.05;
     best_err=100000;
     incr=0.5;

@@ -1,9 +1,9 @@
 
-#lateration algorithm to estimate position fo landmark
-#is a range based triangulation algorithm
-#different implementation possible, 
-#an implementation can be found here http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.7.933&rep=rep1&type=pdf
-#at page 504
+%lateration algorithm to estimate position fo landmark
+%is a range based triangulation algorithm
+%different implementation possible, 
+%an implementation can be found here http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.7.933&rep=rep1&type=pdf
+%at page 504
 
 function [p1,p2]=estimateLandmarkPosition(measurements,poses)
     
