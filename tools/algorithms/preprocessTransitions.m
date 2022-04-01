@@ -8,6 +8,9 @@ function T=preprocessTransitions(transitions,poses)
         T(end+1).pose_prev=v2t([pose_prev.x pose_prev.y pose_prev.theta]');
         T(end).pose_new=v2t([pose_next.x pose_next.y pose_next.theta]');
         T(end).v=transitions(i).v;
+
+        T(end).id_from=transitions(i).id_from;
+        T(end).id_to=transitions(i).id_to;
     endfor
 
 endfunction

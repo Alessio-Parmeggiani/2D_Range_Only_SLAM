@@ -59,16 +59,16 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
     % no real difference in using simply the poses or computing the trajectory using the transitions
     
     %compute trajectory using poses
-    robot_poses2=zeros(3, 3, length(poses));
+    robot_poses=zeros(3, 3, length(poses));
     for i=1:length(poses)
-        robot_poses2(:,:,i)=v2t([poses(i).x poses(i).y poses(i).theta]);
+        robot_poses(:,:,i)=v2t([poses(i).x poses(i).y poses(i).theta]');
     endfor
     
-
+    
     %compute trajectory using transitions
-    robot_poses=zeros(3, 3, length(poses));
-    robot_poses(:,:,1)=v2t([poses(1).x poses(1).y poses(1).theta]);
-    prev_pose=robot_poses(:,:,1);
+    robot_poses_odom=zeros(3, 3, length(poses));
+    robot_poses_odom(:,:,1)=v2t([poses(1).x poses(1).y poses(1).theta]);
+    prev_pose=robot_poses_odom(:,:,1);
     for i=1:length(transitions)
         V=transitions(i).v;
         displacement=v2t([V(1) V(2) V(3)]);
@@ -85,7 +85,7 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
 
         #next_pose=displacement*prev_pose;
         prev_pose=next_pose;
-        robot_poses(:,:,i+1)=next_pose;
+        robot_poses_odom(:,:,i+1)=next_pose;
     endfor
 
     printf("Looking for differences between pose and pose using odometry measurements\n")
@@ -93,7 +93,7 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
     max_dif=-1;
     for i=1:length(robot_poses)
         p1=t2v(robot_poses(:,:,i));
-        p2=t2v(robot_poses2(:,:,i));
+        p2=t2v(robot_poses_odom(:,:,i));
         dif=norm(p1-p2);
         total_dif+=dif;
         if dif>max_dif
@@ -101,10 +101,11 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
         endif
     endfor
     mean_dif=total_dif/length(robot_poses);
-    printf("Maximum difference is %f\nmean of differences is %f\n\n",max_dif,mean_dif)
+    printf("\tMaximum difference is %f\n\tmean of differences is %f\n\n",max_dif,mean_dif)
     
     #myDrawTrajectory(robot_poses,robot_poses,robot_poses2,length(robot_poses))
 
+    robot_poses=robot_poses_odom;
 
     
 endfunction

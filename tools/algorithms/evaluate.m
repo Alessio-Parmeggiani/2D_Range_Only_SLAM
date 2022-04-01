@@ -22,3 +22,14 @@ function err=evaluate(gt_landmarks, est_landmarks,land_id_to_idx)
     %computing final error
     err=err/length(est_landmarks);
 endfunction
+
+
+function err=evaluatePoses(gt_poses,est_poses)
+    err=0;
+    for i=1:length(gt_poses)
+        p1=t2v(gt_poses(:,:,i));
+        p2=t2v(est_poses(:,:,i));
+        err+=norm(p1-p2);
+    endfor
+    err=err/length(gt_poses);
+endfunction
