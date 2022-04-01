@@ -83,7 +83,7 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
         next_pose=v2t(next_pose);
         
 
-        #next_pose=displacement*prev_pose;
+        %next_pose=displacement*prev_pose;
         prev_pose=next_pose;
         robot_poses_odom(:,:,i+1)=next_pose;
     endfor
@@ -103,7 +103,7 @@ function [landmark_positions,robot_poses,land_observations,l_id_to_idx] = initGu
     mean_dif=total_dif/length(robot_poses);
     printf("\tMaximum difference is %f\n\tmean of differences is %f\n\n",max_dif,mean_dif)
     
-    #myDrawTrajectory(robot_poses,robot_poses,robot_poses2,length(robot_poses))
+    %myDrawTrajectory(robot_poses,robot_poses,robot_poses2,length(robot_poses))
 
     robot_poses=robot_poses_odom;
 

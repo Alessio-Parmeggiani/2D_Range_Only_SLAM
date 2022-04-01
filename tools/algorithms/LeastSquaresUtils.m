@@ -121,7 +121,7 @@ function [ep,J1,J2]=errorJacobianOdometry(P1,P2,trans)
   p2_est=[x1+v*c1 y1+v*s1 theta1+t]';
   P2_est=v2t(p2_est);
 
-  #error= displacement I have - displacement I measure 
+  %error= displacement I have - displacement I measure 
   actual_disp=inv(P1)*P2;
   measure_disp=inv(P1)*P2_est;
   ep=actual_disp - measure_disp;

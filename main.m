@@ -71,7 +71,7 @@ printf("\n\nLeast squares using %d iterations...\n",params.num_iterations)
 %least squares using range and odometry
 [XR,XL]=leastSquares_odom(land_observations,robot_poses,landmark_positions,poses,T,gt_landmarks,gt_matrix_poses,params,land_id_to_idx);
 
-#printf("error in landmark position after least square is %f\n",evaluate(gt_landmarks,XL,land_id_to_idx));
+%printf("error in landmark position after least square is %f\n",evaluate(gt_landmarks,XL,land_id_to_idx));
 
 %tuning parameters
 %this function was used to test if changing parameters of LS (e.g.  damping) had some effect
