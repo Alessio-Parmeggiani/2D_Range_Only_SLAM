@@ -9,6 +9,8 @@ addpath 'tools/my_visualization'
 addpath 'tools/algorithms'
 source 'tools/algorithms/initGuess.m'
 source 'tools/algorithms/leastSquares.m'
+source 'tools/algorithms/leastSquares2.m'
+source 'tools/algorithms/preprocessTransitions.m'
 source 'tools/algorithms/LeastSquaresUtils.m'
 source 'tools/algorithms/evaluate.m'
 source 'tools/algorithms/tuning.m'
@@ -44,15 +46,19 @@ params
 %----INITIAL GUESS----
 printf("\n Initial Guess...\n")
 [landmark_positions,robot_poses,land_observations,land_id_to_idx]=initGuess(observations,poses,transitions,params);
-init_guess=land_observations;
+init_guess_land=land_observations;
 printf("Error in landmark position using initial guess is %f\n",evaluate(gt_landmarks,land_observations,land_id_to_idx));
 
 
-%---LEAST SQUARE OPTIMIZATION-------
-printf("\n Least squares using %d iterations...\n",params.num_iterations)
-[XR,XL]=leastSquares(land_observations,robot_poses,landmark_positions,poses,gt_landmarks,params,land_id_to_idx);
 
-printf("error in landmark position after least square is %f\n",evaluate(gt_landmarks,XL,land_id_to_idx));
+
+T=preprocessTransitions(transitions,poses);
+
+%---LEAST SQUARE OPTIMIZATION-------
+#printf("\n Least squares using %d iterations...\n",params.num_iterations)
+[XR,XL]=leastSquares2(land_observations,robot_poses,landmark_positions,poses,T,gt_landmarks,params,land_id_to_idx);
+
+#printf("error in landmark position after least square is %f\n",evaluate(gt_landmarks,XL,land_id_to_idx));
 
 %tuning parameters
 %this function was used to test if changing parameters of LS (kernel_threshold, damping) had some effect
@@ -73,7 +79,7 @@ for i=1:length(gt_poses)
 endfor
 
 %plot trajectory and landmarks
-myPlot(robot_poses,XR,gt_matrix_poses,init_guess,XL,gt_landmarks)
+myPlot(robot_poses,XR,gt_matrix_poses,init_guess_land,XL,gt_landmarks)
 
 printf("Done!\n")
 

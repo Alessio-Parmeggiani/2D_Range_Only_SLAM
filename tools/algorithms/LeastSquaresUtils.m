@@ -102,3 +102,47 @@ function [e, Jr, Jl] = errorAndJacobian(Xr, Xl, z)
     
 
 endfunction
+
+function [ep,J1,J2]=errorJacobianOdometry(transition)
+  next_pose=transition.pose_new;
+  prev_pose=transition.pose_prev;
+  trans=transition.v; 
+
+  P1=prev_pose;
+  P2=next_pose;
+  p1=t2v(P1);
+  p2=t2v(P2);
+
+  %some components to avoid giant jacobian
+  x1=p1(1); y1=p1(2); theta1=p1(3);
+  x2=p2(1); y2=p2(2); theta2=p2(3);
+  c1=cos(theta1); s1=sin(theta1); c2=cos(theta2); s2=sin(theta2); 
+  s12=sin(theta1 - theta2); c12=cos(theta1 - theta2);
+
+  v=trans(1); t=trans(3);
+
+  p2_est=[x1+v*c1 y1+v*s1 theta1+t]';
+  P2_est=v2t(p2_est);
+
+  #e=displacement I have - displacement I measure 
+  actual_disp=inv(P1)*P2;
+  e=actual_disp - inv(P1)*P2_est;
+  
+  %reshaping error to have a vector so J'* e can be computed
+  %useless values are removed and it's possible to compute the jacobian using symbolic operations
+  ep=reshape(e(1:2,:),6,1);
+
+  #jacobian 6x6
+J=[0,     0,              -s12,               0,  0,  s12;
+   0,     0,              -c12,               0,  0,  c12;
+   0,     0,               c12,               0,  0, -c12;
+   0,     0,              -s12,               0,  0,  s12;
+   -c1, -s1, y2*c1 - y1*c1 + x1*s1 - x2*s1,  c1, s1,   0;
+    s1, -c1, x1*c1 - x2*c1 + y1*s1 - y2*s1, -s1, c1,   0];
+
+%6x3
+J1=J(1:6,1:3);
+%6x3
+J2=J(1:6,4:6);
+
+endfunction

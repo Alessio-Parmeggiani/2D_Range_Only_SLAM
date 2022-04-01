@@ -33,7 +33,7 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 	init_land=zeros(2,length(init));
 	valid_index=1;
 	for l=1:length(init)
-		if init(l).pos
+		if init(l).pos && init(l).pos(2)<15
 			init_land(:,end+1)=init(l).pos;
 			valid_index=l;
 		else 
@@ -73,9 +73,9 @@ function done = myDrawLandmarks(init,optim,truth,draw_labels=false)
 	scatter(init_land(1,:),init_land(2,:),scale,color,"filled");
 	color="g";
 	scatter(optim_land(1,:),optim_land(2,:),scale,color,"filled");
-	legend("Ground Truth", "initial Guess (with outliers)", "Least Square optimization")
+	legend("Ground Truth", "initial Guess ", "Least Square optimization")
 	hold off;
-	print(fullfile("landmark_plot.png"));
+	print(fullfile("landmark_plot_no_outlier.png"));
 	
 	
 end
