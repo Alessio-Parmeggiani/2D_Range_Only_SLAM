@@ -1,9 +1,8 @@
-# Probabilistic_Robotics_2021_2022_Project
+# 2D Range only SLAM
 Project of probabilistic robotics 2021/2022
-Range only SLAM
 
 ## Goal
-Estimating initial map from measurements and reduce error from trajectory and landmarks using least square algorithm
+Estimate initial guess for the map from measurements and reduce error of trajectory and map using least square algorithm
 
 
 ## Results
